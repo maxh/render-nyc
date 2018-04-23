@@ -109,7 +109,7 @@ Preview will automatically refresh when the file on disk changes (unless you've 
 
 ____Random dev notes____
 
-After editing Dockerfile
+After editing Dockerfile:
 
-Remove exited containers: `docker rm $(docker ps -a -f status=exited -q)`
-Remove unused images: `docker rmi image-name-1 image-name-2`
+- Remove exited containers: `docker rm $(docker ps -a -f status=exited -q)`
+- Remove unused images: `docker rmi image-name-1 image-name-2`
