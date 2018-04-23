@@ -6,7 +6,7 @@ This repo walks through how to use OSM data to render a high-quality raster imag
 
 There are two main components:
 
-1) A Postgres database with OSM database open on Mac OS.
+1) A Postgres database populated with OSM data running on Mac OS.
 2) A Mapnik Python script that runs in a Docker container.
 
 For (2), conceivably you could install Mapnik directly onto Mac OS instead, but I couldn't figure it out.
