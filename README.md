@@ -81,7 +81,7 @@ docker create --name render_nyc -it render_nyc bash
 
 #### Iterate
 
-Edit `render_nyc.py`, then run these commands to execute the new script on the Docker container:
+Edit `render_nyc.py` by tweaking e.g. the style, database query, or viewport. Then run these commands to execute the new script on the Docker container:
 
 ```sh
 # Split up for readability:
