@@ -25,7 +25,7 @@ Install [osm2pgsql](https://wiki.openstreetmap.org/wiki/Osm2pgsql):
 > brew install osm2pgsql
 ```
 
-Create a database (here it's called `osm_nyc`, but choose whatever):
+Create a database:
 
 ```sh
 > createdb osm_nyc

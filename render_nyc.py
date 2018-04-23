@@ -69,7 +69,7 @@ layer.datasource = mapnik.PostGIS(
     host="docker.for.mac.localhost",
     user="postgres",
     password="",
-    dbname="gis",
+    dbname="osm_nyc",
     table=query,
 )
 layer.srs = "+init=epsg:4326"
