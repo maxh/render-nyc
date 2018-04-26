@@ -2,7 +2,7 @@
 
 ![Low resolution sample](sample.png)
 
-This repo walks through how to use OSM data to render a high-quality raster image of Manhattan on Mac OS X. It's a bit more complex than you might expect. This is the guide I wish I'd had when I started. It can easily be adapted to different cities -- I just like concrete examples :)
+This repo walks through how to use OSM data to render a high-quality raster image of Manhattan on Mac OS X. It's a bit more complex than you might expect. This is the guide I wish I'd had when I started. It can easily be adapted to different cities -- I just like concrete* examples :)
 
 There are two main components:
 
@@ -10,6 +10,8 @@ There are two main components:
 2) A Mapnik Python script that runs in a Docker container.
 
 For (2), conceivably you could install Mapnik directly onto Mac OS instead, but I couldn't figure it out.
+
+* Pun intended.
 
 ## Setup
 
