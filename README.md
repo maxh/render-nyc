@@ -63,6 +63,8 @@ docker create --name render_nyc -it render_nyc bash
 
 ## Usage
 
+Ensure Postgres and Docker are running. Then:
+
 ### Render one time
 
 ```sh
@@ -83,31 +85,25 @@ docker create --name render_nyc -it render_nyc bash
 
 #### Iterate
 
-Edit `render_nyc.py` by tweaking e.g. the style, database query, or viewport. Then run these commands to execute the new script on the Docker container:
+Edit `render_nyc.py` by tweaking e.g. the style, database query, or viewport. Then:
 
 ```sh
-# Split up for readability:
-> docker cp ./render_nyc.py render_nyc:/opt/
-> docker exec render_nyc python2 /opt/render_nyc.py
-> docker cp render_nyc:/nyc.png ./
-
-# Run one line with `&&` for quick build cycles.
-> docker cp ./render_nyc.py render_nyc:/opt/ && docker exec render_nyc python2 /opt/render_nyc.py && docker cp render_nyc:/nyc.png ./
+> ./generate_png.sh
 ```
 
-Open the output image:
+### Generate vector image from .png.
+
+You'll need to `brew install Imagemagick` and `brew install potrace`. Then:
 
 ```sh
-> open -a Preview ./nyc.png
+> ./generate_eps.sh
 ```
-
-Preview will automatically refresh when the file on disk changes (unless you've edited it within Preview).
-
-#### Cleanup
 
 ```sh
 > docker stop render_nyc
 ```
+
+### Tweak code and rerender
 
 ____Random dev notes____
 

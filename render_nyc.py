@@ -1,6 +1,67 @@
 import math
 import mapnik
 
+manhattan_outline = """
+{
+  "type": "Polygon",
+  "coordinates": [[
+    [
+      -73.93180847167969,
+      40.88133311333721
+    ],
+    [
+      -74.00115966796875,
+      40.773261878622634
+    ],
+    [
+      -74.02725219726562,
+      40.714476284709335
+    ],
+    [
+      -74.02725219726562,
+      40.69521661351715
+    ],
+    [
+      -73.99703979492188,
+      40.704066343242474
+    ],
+    [
+      -73.97575378417969,
+      40.70875101828792
+    ],
+    [
+      -73.96614074707031,
+      40.72696606629052
+    ],
+    [
+      -73.96751403808594,
+      40.7451761300463
+    ],
+    [
+      -73.93730163574219,
+      40.77898159474759
+    ],
+    [
+      -73.92494201660156,
+      40.80133575979202
+    ],
+    [
+      -73.92906188964844,
+      40.83667117059108
+    ],
+    [
+      -73.90159606933594,
+      40.873545407754946
+    ],
+    [
+      -73.93180847167969,
+      40.88133311333721
+    ]
+  ]]
+}
+
+"""
+
 # Helpers to convert from lat/lon to web mercator. From:
 # https://wiki.openstreetmap.org/wiki/Mercator#Python_implementation
 def merc_x(lon):
@@ -39,7 +100,7 @@ box_coords = [
 bounds = mapnik.Box2d(*box_coords)
 
 # Create the map.
-factor = 3 # higher for higher res
+factor = 4 # higher for higher res
 m = mapnik.Map(1024*factor, 2048*factor)
 m.background = mapnik.Color("#FFFFFF")
 m.aspect_fix_mode = mapnik.aspect_fix_mode.ADJUST_BBOX_HEIGHT
@@ -56,15 +117,43 @@ m.append_style("basic_style", s)
 
 # Create the layer.
 layer = mapnik.Layer("osm_lines")
-query = """(
-SELECT *
-FROM planet_osm_line
-WHERE tunnel IS NULL
-  AND (highway IS NOT NULL OR admin_level = '8')
-  AND bridge IS NULL
-ORDER BY z_order
-) AS roads_and_admin_lines
+query = (
 """
+(
+  SELECT *
+  FROM (
+    (
+      SELECT *
+      FROM planet_osm_polygon
+      WHERE waterway = 'riverbank'
+        AND tunnel IS NULL
+      ORDER BY z_order
+    )
+    UNION ALL
+    (
+      SELECT *
+      FROM planet_osm_line
+      WHERE tunnel IS NULL
+        AND bridge IS NULL
+        AND highway IS NOT NULL
+      ORDER BY z_order
+    )
+  ) AS t
+  WHERE ST_Intersects(
+    t.way,
+    ST_Transform(
+      ST_SetSRID(
+        ST_GeomFromGeoJSON('%s'),
+        4326
+      ),
+      3857
+    )
+  )
+)
+AS shores_and_roads
+"""
+% manhattan_outline
+)
 layer.datasource = mapnik.PostGIS(
     host="docker.for.mac.localhost",
     user="postgres",
