@@ -1,66 +1,10 @@
 import math
 import mapnik
 
-manhattan_outline = """
-{
-  "type": "Polygon",
-  "coordinates": [[
-    [
-      -73.93180847167969,
-      40.88133311333721
-    ],
-    [
-      -74.00115966796875,
-      40.773261878622634
-    ],
-    [
-      -74.02725219726562,
-      40.714476284709335
-    ],
-    [
-      -74.02725219726562,
-      40.69521661351715
-    ],
-    [
-      -73.99703979492188,
-      40.704066343242474
-    ],
-    [
-      -73.97575378417969,
-      40.70875101828792
-    ],
-    [
-      -73.96614074707031,
-      40.72696606629052
-    ],
-    [
-      -73.96751403808594,
-      40.7451761300463
-    ],
-    [
-      -73.93730163574219,
-      40.77898159474759
-    ],
-    [
-      -73.92494201660156,
-      40.80133575979202
-    ],
-    [
-      -73.92906188964844,
-      40.83667117059108
-    ],
-    [
-      -73.90159606933594,
-      40.873545407754946
-    ],
-    [
-      -73.93180847167969,
-      40.88133311333721
-    ]
-  ]]
-}
 
-"""
+outline = None
+with open("outline.geojson") as f:
+  outline = f.read()
 
 # Helpers to convert from lat/lon to web mercator. From:
 # https://wiki.openstreetmap.org/wiki/Mercator#Python_implementation
@@ -152,7 +96,7 @@ query = (
 )
 AS shores_and_roads
 """
-% manhattan_outline
+% outline
 )
 layer.datasource = mapnik.PostGIS(
     host="docker.for.mac.localhost",
