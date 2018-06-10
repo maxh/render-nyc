@@ -1,4 +1,3 @@
-*.bmp
-*.eps
+*.svg
 *.png
 !sample.png
