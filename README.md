@@ -91,18 +91,6 @@ Edit `render_nyc.py` by tweaking e.g. the style, database query, or viewport. Th
 > ./generate_png.sh
 ```
 
-### Generate vector image from .png.
-
-You'll need to `brew install Imagemagick` and `brew install potrace`. Then:
-
-```sh
-> ./generate_eps.sh
-```
-
-```sh
-> docker stop render_nyc
-```
-
 ### Tweak code and rerender
 
 ____Random dev notes____
