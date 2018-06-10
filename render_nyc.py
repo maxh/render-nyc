@@ -1,7 +1,16 @@
 import math
 import mapnik
+from argparse import ArgumentParser
 
+parser = ArgumentParser()
+parser.add_argument(
+  "--format",
+  dest="format",
+  help="file format"
+)
+args = parser.parse_args()
 
+# Load the outline of the city from a GeoJSON file.
 outline = None
 with open("outline.geojson") as f:
   outline = f.read()
@@ -80,6 +89,42 @@ query = (
       WHERE tunnel IS NULL
         AND bridge IS NULL
         AND highway IS NOT NULL
+        AND ST_length(way) > 100
+        AND highway IN (
+          --'bridleway',
+          --'bus_guideway',
+          --'construction',
+          'corridor',
+          --'cycleway',
+          --'disused',
+          --'elevator',
+          --'escalator',
+          'footway',
+          --'living_street',
+          'motorway',
+          'motorway_link',
+          --'path',
+          --'pedestrian',
+          --'platform',
+          'primary',
+          --'primary_link',
+          --'proposed',
+          --'raceway',
+          'residential',
+          'road',
+          'secondary',
+          --'secondary_link',
+          'service',
+          --'steps',
+          'tertiary',
+          --'tertiary_link',
+          --'track',
+          'trunk',
+          --'trunk_link',
+          'unclassified',
+          --'walkway',
+          ' '
+        )
       ORDER BY z_order
     )
   ) AS t
@@ -111,5 +156,5 @@ m.layers.append(layer)
 
 # Render!
 print("Rendering...")
-mapnik.render_to_file(m, "nyc.png", "png")
-print("Rendered to `nyc.png`.")
+mapnik.render_to_file(m, "nyc." + args.format, args.format)
+print("Rendered to `nyc.%s`." % args.format)
