@@ -63,27 +63,17 @@ docker create --name render_nyc -it render_nyc bash
 
 ## Usage
 
-Ensure Postgres and Docker are running. Then:
-
-### Render one time
-
-```sh
-> docker start render_nyc
-> docker exec render_nyc python2 /opt/render_nyc.py
-> docker cp render_nyc:/nyc.png ./
-> open -a Preview ./nyc.png
-> docker stop render_nyc
-```
-
 ### Tweak code and rerender
 
 #### Set up
 
+Ensure Postgres and Docker are running. Then:
+
 ```sh
 > docker start render_nyc
 ```
 
-#### Iterate
+#### Iterate with pngs
 
 Edit `render_nyc.py` by tweaking e.g. the style, database query, or viewport. Then:
 
@@ -91,7 +81,17 @@ Edit `render_nyc.py` by tweaking e.g. the style, database query, or viewport. Th
 > ./generate_png.sh
 ```
 
-### Tweak code and rerender
+This will close and reopen the image in Preview.
+
+#### Get vector file
+
+Once satisfied with the generated image, run this to get a final vector file:
+
+```sh
+> ./generate_svg.sh
+```
+
+You might want to delete some lines in Sketch to clean up the image.
 
 ____Random dev notes____
 
