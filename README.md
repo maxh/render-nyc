@@ -93,9 +93,15 @@ Once satisfied with the generated image, run this to get a final vector file:
 
 You might want to delete some lines in Sketch to clean up the image.
 
-____Random dev notes____
+## Development notes
 
-After editing Dockerfile:
+### Tips
+
+Scaling pixels to inches
+
+- For printing to the laser cutter, 72dpi is used. So 72px = 1inch.
+
+Cleaning up after editing Dockerfile:
 
 - Remove exited containers: `docker rm $(docker ps -a -f status=exited -q)`
 - Remove unused images: `docker rmi image-name-1 image-name-2`
